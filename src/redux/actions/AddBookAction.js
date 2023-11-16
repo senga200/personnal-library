@@ -27,6 +27,7 @@ const addBookSlice = createSlice({
     addBook(state, action) {
       state.books.push(action.payload);
       localStorage.setItem("booksList", JSON.stringify(state.books));
+      console.log("addBook action", state.books);
     },
     addBookFailure(state, action) {
       state.error = action.payload;

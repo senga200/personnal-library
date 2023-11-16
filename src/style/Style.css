@@ -1,0 +1,44 @@
+.main {
+    background-color: #EFEFEF;
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    font-family: 'Patrick Hand', sans-serif;
+    font-size: 3rem;
+    color: #2F4F4F;
+}
+
+.main_header {
+    background-image: url(/public/bgBooks.jpg);
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 18rem;
+}
+
+.library {
+    margin: 3rem;
+}
+
+.search-book, .add-book {
+    padding: 1rem;
+}
+
+.search-form_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1.5rem;
+}
+
+.add-form_container {
+    margin: 1.5rem;
+}
+
+.add-book_table {
+    border: solid 1px #2F4F4F;
+}

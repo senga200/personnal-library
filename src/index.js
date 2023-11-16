@@ -4,10 +4,12 @@ import { Provider } from "react-redux";
 import App from "./App";
 import { configureStore } from "@reduxjs/toolkit";
 import AddBookSlice from "./redux/actions/AddBookAction";
+import SearchBookSlice from "./redux/actions/SearchBookAction";
 
 const store = configureStore({
   reducer: {
     addBook: AddBookSlice,
+    searchBooks: SearchBookSlice,
   },
 });
 

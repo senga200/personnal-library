@@ -9,8 +9,6 @@ const initialState = {
       id: id++,
       title: "Hamlet",
       author: "William Shakespeare",
-      // pages: 1178,
-      // currentPage: 0,
       read: false,
     },
   ],
@@ -26,9 +24,43 @@ const addBookSlice = createSlice({
   reducers: {
     addBook(state, action) {
       state.books.push(action.payload);
-      localStorage.setItem("booksList", JSON.stringify(state.books));
+      // localStorage.setItem("booksList", JSON.stringify(state.books));
       console.log("addBook action", state.books);
     },
+
+    addBookFromAPI(state, action) {
+      // Vérifier si action.payload.volumeInfo existe avant de le déstructurer
+      const { id, volumeInfo } = action.payload || {};
+
+      if (!volumeInfo || !id) {
+        console.error("Volume info is missing in the payload");
+        return;
+      }
+      // Destructure title et authors de volumeInfo
+      const { title, authors } = volumeInfo;
+      const author =
+        authors && authors.length > 0 ? authors[0] : "Unknown Author";
+
+      const bookToAdd = {
+        id,
+        title,
+        author,
+        read: false,
+      };
+
+      const bookExists = state.books.find(
+        (book) =>
+          book.title === bookToAdd.title && book.author === bookToAdd.author
+      );
+
+      if (!bookExists) {
+        state.books.push(bookToAdd);
+        state.id = action.payload.id;
+        localStorage.setItem("booksList", JSON.stringify(state.books));
+        console.log("id from addBookFromAPI", state.id);
+      }
+    },
+
     addBookFailure(state, action) {
       state.error = action.payload;
     },
@@ -42,6 +74,11 @@ const addBookSlice = createSlice({
   },
 });
 
-export const { addBook, addBookFailure, deleteBook, deleteBookFailure } =
-  addBookSlice.actions;
+export const {
+  addBook,
+  addBookFromAPI,
+  addBookFailure,
+  deleteBook,
+  deleteBookFailure,
+} = addBookSlice.actions;
 export default addBookSlice.reducer;

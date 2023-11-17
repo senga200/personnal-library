@@ -40,8 +40,9 @@ span {
 .collapse_content {
     align-items: center;
     background-color: #F6F6F6;
-    border-radius: 10px;
+    border-radius: 0 0 10px 10px;
     height: auto;
+    padding: 1rem;
 }
 
 

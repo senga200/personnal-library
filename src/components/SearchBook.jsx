@@ -5,13 +5,27 @@ import {
   searchBooksLoading,
   searchBooksFailure,
 } from "../redux/actions/SearchBookAction";
+import AddApiBook from "./AddApiBook";
+import Modal from "../components/Modal";
 
 function SearchBook() {
-  const APIKey = "AIzaSyCED0o_huLcg8pn0KopN_wRdQO3d7oGHtU";
-  const [search, setSearch] = useState("");
   const dispatch = useDispatch();
+  const APIKey = "AIzaSyCED0o_huLcg8pn0KopN_wRdQO3d7oGHtU";
   const store = useSelector((state) => state.searchBooks);
   const fetchedBooks = store.fetchedBooks;
+  const [search, setSearch] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [contentModal, setContentModal] = useState("");
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setContentModal("");
+  };
+
+  const handleThumbnailClick = (imageUrl) => {
+    setIsModalOpen(true);
+    setContentModal(<img src={imageUrl} alt="Book Cover" />);
+  };
 
   useEffect(() => {
     console.log("Updated store:", store);
@@ -20,11 +34,8 @@ function SearchBook() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Dispatch the loading action
     dispatch(searchBooksLoading());
 
-    // Fetch from Google Books API and dispatch success or failure actions
     fetch(
       `https://www.googleapis.com/books/v1/volumes?q=${search}&key=${APIKey}`
     )
@@ -40,6 +51,7 @@ function SearchBook() {
         console.log("data.items", data.items);
         console.log("store", store);
         console.log("store.fetchedBooks", store.fetchedBooks);
+        // console.log("id du premier livre", data.items[0].id);
         console.log("fetched books", data.items || []);
       })
       .catch((error) => {
@@ -72,7 +84,8 @@ function SearchBook() {
               <th>Author</th>
               <th>Publisher</th>
               <th>Publish Date</th>
-              <th>Thumbnail</th>
+              <th>Cover</th>
+              <th>Add</th>
             </tr>
           </thead>
           <tbody>
@@ -84,18 +97,30 @@ function SearchBook() {
                 <td>{book.volumeInfo.publishedDate}</td>
                 <td>
                   <img
+                    className="thumbnail"
                     src={
                       book.volumeInfo.imageLinks
                         ? book.volumeInfo.imageLinks.thumbnail
-                        : "https://via.placeholder.com/150"
+                        : "https://via.placeholder.com/15"
                     }
                     alt={`${book.volumeInfo.title} book`}
+                    onClick={() =>
+                      handleThumbnailClick(book.volumeInfo.imageLinks.thumbnail)
+                    }
                   />
+                </td>
+                <td>
+                  <AddApiBook book={book} />
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+        <Modal
+          isOpen={isModalOpen}
+          isClose={closeModal}
+          content={contentModal}
+        />
       </div>
     </div>
   );

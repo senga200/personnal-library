@@ -16,7 +16,6 @@ const searchBooksSlice = createSlice({
       state.fetchedBooks = action.payload;
       //state.fetchedBooks.push(action.payload.items);
       // localStorage.setItem("fetchedBooks", JSON.stringify(state.fetchedBooks));
-      //add fetchedBooks in the store in the array searchBooks.fetchedBooks
 
       console.log("searchBooksSuccess");
       console.log("fetchedBooks", state.fetchedBooks);

@@ -30,7 +30,7 @@ function Home() {
             <div className="add-book_table">
               <h2>Books Table</h2>
               {books.length > 0 ? (
-                <table>
+                <table className="books-table">
                   <thead>
                     <tr>
                       <th>Title</th>
@@ -41,9 +41,9 @@ function Home() {
                   <tbody>
                     {books.map((book, index) => (
                       <tr key={index}>
-                        <td>{book.title}</td>
-                        <td>{book.author}</td>
-                        <td>
+                        <td className="books-table_content">{book.title}</td>
+                        <td className="books-table_content">{book.author}</td>
+                        <td className="books-table_delete">
                           <Delete id={book.id} index={index} />
                         </td>
                       </tr>

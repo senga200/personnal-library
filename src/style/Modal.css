@@ -1,0 +1,36 @@
+.modalBack {
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ModalView {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    width: 50%;
+    height: 50%;
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: #edc502;
+    box-shadow: 0 0 1rem 0.5rem rgba(0, 0, 0, 0.5);
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.5rem;
+    background-color: transparent;
+    cursor: pointer;
+}

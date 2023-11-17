@@ -1,22 +1,38 @@
 import React from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { deleteBook, deleteBookFailure } from "../redux/actions/AddBookAction";
+import {
+  deleteBook,
+  deleteBookFromFirebase,
+  deleteBookFailure,
+} from "../redux/actions/AddBookAction";
+import Modal from "./Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 function Delete({ index, id }) {
   const dispatch = useDispatch();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [contentModal, setContentModal] = useState("");
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setContentModal("");
+  };
 
   const handleDelete = (e) => {
     e.preventDefault();
     console.log("index", index);
     if (!index || !id) {
-      alert("failure !");
       dispatch(deleteBookFailure());
+      setIsModalOpen(true);
+      setContentModal("failure !");
       return;
     }
     dispatch(deleteBook(id));
-    alert("Book Deleted Successfully");
+    dispatch(deleteBookFromFirebase(id));
+    setIsModalOpen(true);
+    setContentModal("Delete book Successfully");
   };
 
   return (
@@ -28,6 +44,11 @@ function Delete({ index, id }) {
         >
           <FontAwesomeIcon icon={faTrashCan} />
         </span>
+        <Modal
+          isOpen={isModalOpen}
+          isClose={closeModal}
+          content={contentModal}
+        />
       </div>
     </div>
   );

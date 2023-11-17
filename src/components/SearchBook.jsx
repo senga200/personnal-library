@@ -5,6 +5,7 @@ import {
   searchBooksLoading,
   searchBooksFailure,
 } from "../redux/actions/SearchBookAction";
+
 import AddApiBook from "./AddApiBook";
 import Modal from "../components/Modal";
 
@@ -28,7 +29,6 @@ function SearchBook() {
   };
 
   useEffect(() => {
-    console.log("Updated store:", store);
     console.table("store.fetchedBooks table", store.fetchedBooks);
   }, [store]);
 
@@ -49,10 +49,6 @@ function SearchBook() {
         dispatch(searchBooks(data.items || []));
         console.log("data", data);
         console.log("data.items", data.items);
-        console.log("store", store);
-        console.log("store.fetchedBooks", store.fetchedBooks);
-        // console.log("id du premier livre", data.items[0].id);
-        console.log("fetched books", data.items || []);
       })
       .catch((error) => {
         dispatch(searchBooksFailure(error.message));
@@ -60,7 +56,6 @@ function SearchBook() {
   };
 
   console.log("store après dispatch", store);
-  console.log("store.fetchedBooks après dispatch", store.fetchedBooks);
 
   return (
     <div className="search-form_container">

@@ -1,7 +1,11 @@
 import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addBookFromAPI } from "../redux/actions/AddBookAction";
+import {
+  addBookFromAPI,
+  addBookToFirebase,
+  addBookFailure,
+} from "../redux/actions/AddBookAction";
 import Modal from "../components/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
@@ -18,11 +22,14 @@ function AddApiBook({ book }) {
 
   const handleAddApiBook = () => {
     if (!book) {
+      dispatch(addBookFailure());
       setIsModalOpen(true);
       setContentModal("failure !");
       return;
     }
     dispatch(addBookFromAPI(book));
+    dispatch(addBookToFirebase(book));
+    console.log("book après dispatch", book);
 
     setIsModalOpen(true);
     setContentModal("Book Added Successfully");

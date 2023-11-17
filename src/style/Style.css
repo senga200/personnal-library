@@ -63,11 +63,13 @@ h1 {
     align-items: center;
 }
 
+/*TABLE*/
 /*ADD BOOK - to my library*/
 
-.add-book_table {
+/* .add-book_table {
     display: grid;
-}
+} */
+
 
 .books-table_content, .books-table_delete {
     height: 3rem;
@@ -79,7 +81,12 @@ h1 {
     align-items: center;
 }
 
-/*TABLE*/
+table {
+    border-collapse: collapse;
+    width: 100%;
+    background-color: #c0c0c0;
+}
+
 th {
     padding: 0.5rem;
 
@@ -97,8 +104,39 @@ tbody tr {
     background-color: grey;
 }
 
-table {
-    background-color: #c0c0c0;
+footer {
+    background-color: #edc501ff;
+    border-top: #2F4F4F solid 1rem;
+    color: #3b4a5aff;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 7rem;
+}
+
+.personal-infos {
+    display: flex;
+    font-weight: bold;
+    flex-direction: column;
+    align-items: center;
+}
+
+.personal-infos p {
+    margin: 0.5rem;
+}
+
+.links {
+    display: flex;
+    font-weight: bold;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.8rem;
+}
+
+.links a {
+    text-decoration: none;
+    color: #3b4a5aff;
+    padding-top: 1rem;
 }
 
 

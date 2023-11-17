@@ -17,7 +17,6 @@ const searchBooksSlice = createSlice({
       //state.fetchedBooks.push(action.payload.items);
       // localStorage.setItem("fetchedBooks", JSON.stringify(state.fetchedBooks));
 
-      console.log("searchBooksSuccess");
       console.log("fetchedBooks", state.fetchedBooks);
       state.isLoading = false;
     },

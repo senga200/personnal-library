@@ -5,7 +5,6 @@ import {
   searchBooksLoading,
   searchBooksFailure,
 } from "../redux/actions/SearchBookAction";
-
 import AddApiBook from "./AddApiBook";
 import Modal from "../components/Modal";
 
@@ -23,9 +22,30 @@ function SearchBook() {
     setContentModal("");
   };
 
-  const handleThumbnailClick = (imageUrl) => {
+  const handleThumbnailClick = (
+    imageUrl,
+    description,
+    publishedDate,
+    publisher
+  ) => {
     setIsModalOpen(true);
-    setContentModal(<img src={imageUrl} alt="Book Cover" />);
+    setContentModal(
+      <div className="modal-description">
+        <img src={imageUrl} alt="Book Cover" />
+        <p className="book-description">
+          <strong>Description : </strong>
+          {description}
+        </p>
+        <p className="book-description">
+          <strong>Published Date : </strong>
+          {publishedDate}
+        </p>
+        <p className="book-description">
+          <strong>Publisher : </strong>
+          {publisher}
+        </p>
+      </div>
+    );
   };
 
   useEffect(() => {
@@ -55,7 +75,7 @@ function SearchBook() {
       });
   };
 
-  console.log("store après dispatch", store);
+  //console.log("store après dispatch", store);
 
   return (
     <div className="search-form_container">
@@ -64,7 +84,7 @@ function SearchBook() {
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search a book"
+          placeholder="Search a book in Google Books"
           required
         />
         <button>Search</button>
@@ -77,20 +97,18 @@ function SearchBook() {
             <tr>
               <th>Title</th>
               <th>Author</th>
-              <th>Publisher</th>
-              <th>Publish Date</th>
-              <th>Cover</th>
+              <th>More Info</th>
               <th>Add</th>
             </tr>
           </thead>
           <tbody>
             {fetchedBooks.map((book, index) => (
               <tr key={index}>
-                <td>{book.volumeInfo.title}</td>
-                <td>{book.volumeInfo.authors}</td>
-                <td>{book.volumeInfo.publisher}</td>
-                <td>{book.volumeInfo.publishedDate}</td>
-                <td>
+                <td className="books-table_content">
+                  {book.volumeInfo.authors}
+                </td>
+                <td className="books-table_content">{book.volumeInfo.title}</td>
+                <td className="books-table_content">
                   <img
                     className="thumbnail"
                     src={
@@ -100,7 +118,12 @@ function SearchBook() {
                     }
                     alt={`${book.volumeInfo.title} book`}
                     onClick={() =>
-                      handleThumbnailClick(book.volumeInfo.imageLinks.thumbnail)
+                      handleThumbnailClick(
+                        book.volumeInfo.imageLinks.thumbnail,
+                        book.volumeInfo.description,
+                        book.volumeInfo.publishedDate,
+                        book.volumeInfo.publisher
+                      )
                     }
                   />
                 </td>

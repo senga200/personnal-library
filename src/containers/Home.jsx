@@ -13,12 +13,14 @@ function Home() {
 
   useEffect(() => {
     const getBooksFirebase = async () => {
-      const booksData = await getDocs(booksCollection);
-      console.log("booksData", booksData);
-
-      setBooksFirebase(
-        booksData.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-      );
+      try {
+        const booksData = await getDocs(booksCollection);
+        setBooksFirebase(
+          booksData.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+        );
+      } catch (error) {
+        console.error("Error fetching data from Firebase:", error);
+      }
     };
     getBooksFirebase();
   }, [booksCollection]);
@@ -26,7 +28,7 @@ function Home() {
   return (
     <div className="main">
       <div className="main_header">
-        <h1>MY OWN PERSONAL LIBRARY !!</h1>
+        <h1>ADD-A-BOOK !!</h1>
       </div>
       <div className="library">
         <div className="search-book">
@@ -35,10 +37,9 @@ function Home() {
           </Collapse>
         </div>
         <div className="add-book">
-          <Collapse title="Books Table">
+          <Collapse title="My Books Table">
             <div className="add-book_table">
               <div className="books-table">
-                <h2>Books from Firebase</h2>
                 {booksFirebase.length > 0 ? (
                   <table className="books-table">
                     <thead>

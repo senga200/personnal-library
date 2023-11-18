@@ -12,7 +12,7 @@ const ModalOverlay = ({ isOpen, isClose, content }) => {
   };
 
   return (
-    <div>
+    <div className="modal">
       {isOpen ? (
         <div className="modalBack" onClick={handleModalClick}>
           <div className="ModalView">

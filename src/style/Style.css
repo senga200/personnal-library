@@ -30,11 +30,9 @@ h1 {
 
 }
 
-.search-book, .add-book {
-    padding: 1rem;
+.search-book {
+    padding: 1rem 0 1rem 0;
 }
-
-/*SEARCH BOOK - from api*/
 
 .search-form_container {
     margin: 1.5rem;
@@ -44,12 +42,12 @@ h1 {
     display: grid;
 }
 
-.search-form, .add-form_container {
+.search-form {
     padding: 1rem;
     display: flex;
 }
 
-.search-form input, button, .add-form_container input, button {
+.search-form input, button {
     display: flex;
     padding: 0.5rem;
     margin-right: 0.5rem;
@@ -57,18 +55,30 @@ h1 {
     border: grey solid 1px;
 }
 
+input {
+    width: 12rem;
+}
+
 .thumbnail {
     width: 2rem;
     cursor: zoom-in;
-    align-items: center;
+    padding-left: 1rem;
 }
+
+.thumbnail:hover {
+    transform: scale(2);
+    transition: transform 0.5s;
+}
+
+
+p {
+    font-size: 12px;
+    overflow: auto;
+}
+
 
 /*TABLE*/
 /*ADD BOOK - to my library*/
-
-/* .add-book_table {
-    display: grid;
-} */
 
 
 .books-table_content, .books-table_delete {
@@ -89,7 +99,6 @@ table {
 
 th {
     padding: 0.5rem;
-
 }
 
 tbody tr:nth-child(odd) {
@@ -104,6 +113,10 @@ tbody tr {
     background-color: grey;
 }
 
+td {
+    padding: 0 0.5rem;
+}
+
 footer {
     background-color: #edc501ff;
     border-top: #2F4F4F solid 1rem;
@@ -114,6 +127,10 @@ footer {
     height: 7rem;
 }
 
+footer img {
+    width: 6rem;
+}
+
 .personal-infos {
     display: flex;
     font-weight: bold;
@@ -121,8 +138,8 @@ footer {
     align-items: center;
 }
 
-.personal-infos p {
-    margin: 0.5rem;
+li {
+    list-style: none;
 }
 
 .links {
@@ -142,31 +159,32 @@ footer {
 
 @media screen and (max-width: 768px) {
 
+    h1 {
+        font-size: 2rem;
+        margin: 0;
+    }
+
+    .main_header {
+        height: 12rem;
+    }
+
 
     .library {
         margin: 0;
     }
 
+    .search-form_results, .add-book_table {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+
     .books-table th,
     .books-table td {
         border: 1px solid black;
-        display: block;
-        width: 100%;
-        box-sizing: border-box;
     }
 
-    .books-table thead {
-        display: none;
-    }
-
-    .books-table tr {
-        margin-bottom: 10px;
-        border: 1px solid #ddd;
-    }
-
-    .books-table td {
-        border-bottom: 1px solid #ddd;
-    }
 
     .add-form_container {
         flex-direction: column;
@@ -179,5 +197,28 @@ footer {
 
     .search-form_container {
         margin: 0;
+    }
+
+    td {
+        padding: 0;
+        text-align: center;
+
+    }
+
+    footer {
+        z-index: -1;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 8rem;
+        font-size: 12px;
+    }
+
+    footer img {
+        display: none;
     }
 }

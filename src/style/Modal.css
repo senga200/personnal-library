@@ -16,20 +16,24 @@
     justify-content: center;
     align-items: center;
     position: fixed;
-    width: 50%;
-    height: 50%;
-    padding: 1rem;
+    max-width: 350px;
+    height: auto;
+    padding: 2rem;
     border-radius: 1rem;
     background-color: #edc502;
     box-shadow: 0 0 1rem 0.5rem rgba(0, 0, 0, 0.5);
-    font-size: 25px;
+    font-size: 15px;
     font-weight: bold;
+}
+
+p {
+    font-weight: normal;
 }
 
 .close-btn {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: 0;
+    right: 0;
     padding: 0.5rem;
     background-color: transparent;
     cursor: pointer;

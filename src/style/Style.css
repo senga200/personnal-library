@@ -10,9 +10,9 @@
 }
 
 h1 {
-    font-family: 'Patrick Hand', sans-serif;
+    font-family: 'Comfortaa', sans-serif;
     font-size: 3rem;
-    color: #2F4F4F;
+    color: #3b4a5aff;
 }
 
 .main_header {
@@ -57,6 +57,20 @@ h1 {
 
 input {
     width: 12rem;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #3b4a5aff;
+    color: white;
+    transition: background-color 0.5s;
+}
+
+button:active {
+    top: 2px;
 }
 
 .thumbnail {
@@ -124,7 +138,7 @@ footer {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    height: 7rem;
+    height: 10rem;
 }
 
 footer img {

@@ -48,9 +48,7 @@ function SearchBook() {
     );
   };
 
-  useEffect(() => {
-    console.table("store.fetchedBooks table", store.fetchedBooks);
-  }, [store]);
+  useEffect(() => {}, [store]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -61,21 +59,17 @@ function SearchBook() {
     )
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Failed to fetch results");
+          throw new Error("error fetch google books");
         }
         return response.json();
       })
       .then((data) => {
         dispatch(searchBooks(data.items || []));
-        console.log("data", data);
-        console.log("data.items", data.items);
       })
       .catch((error) => {
         dispatch(searchBooksFailure(error.message));
       });
   };
-
-  //console.log("store après dispatch", store);
 
   return (
     <div className="search-form_container">

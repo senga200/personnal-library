@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SearchBook from "../components/SearchBook";
 import BookManager from "../firebase/BookManager";
 import Delete from "../components/Delete";
@@ -30,6 +30,8 @@ function Home() {
     return 0;
   });
 
+  useEffect(() => {}, [booksFirebase]);
+
   return (
     <div className="main">
       <div className="main_header">
@@ -45,7 +47,6 @@ function Home() {
         <div className="add-book">
           <Collapse title="My Books Table">
             <div className="add-book_table">
-              <div className="add-book_pagination"></div>
               <div className="books-table">
                 {sortedBooks.length > 0 ? (
                   <table className="books-table">
@@ -57,7 +58,7 @@ function Home() {
                         <th onClick={() => handleSort("author")}>
                           Author <FontAwesomeIcon icon={faSort} />{" "}
                         </th>
-                        <th>Action</th>
+                        <th>Delete</th>
                       </tr>
                     </thead>
                     <tbody>

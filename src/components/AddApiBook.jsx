@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   addBookFromAPI,
   addBookToFirebase,
@@ -14,6 +14,7 @@ function AddApiBook({ book }) {
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [contentModal, setContentModal] = useState("");
+  const existingBooks = useSelector((state) => state.addBook.books);
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -27,9 +28,18 @@ function AddApiBook({ book }) {
       setContentModal("failure !");
       return;
     }
+
+    const existingBook = existingBooks.find(
+      (existingBook) => existingBook.id === book.id
+    );
+    if (existingBook) {
+      setIsModalOpen(true);
+      setContentModal("You already have this book in your library !");
+      return;
+    }
+
     dispatch(addBookFromAPI(book));
     dispatch(addBookToFirebase(book));
-    console.log("book après dispatch", book);
 
     setIsModalOpen(true);
     setContentModal("Book Added Successfully");

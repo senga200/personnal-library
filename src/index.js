@@ -20,5 +20,3 @@ root.render(
     <App />
   </Provider>
 );
-
-console.log("index's store", store.getState());

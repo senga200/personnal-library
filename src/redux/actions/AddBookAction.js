@@ -11,17 +11,6 @@ const initialState = {
   error: null,
 };
 
-// books: booksList || [
-//   {
-//     id: id++,
-//     title: "Hamlet",
-//     author: "William Shakespeare",
-//     // read: false,
-//   },
-// ],
-// error: null,
-// };
-
 localStorage.setItem("booksList", JSON.stringify(initialState.books));
 
 const addBookSlice = createSlice({
@@ -31,24 +20,21 @@ const addBookSlice = createSlice({
   reducers: {
     // addBook(state, action) {
     //   state.books.push(action.payload);
-    //   // localStorage.setItem("booksList", JSON.stringify(state.books));
     //   console.log("addBook action", state.books);
     // },
 
     addBookFromAPI(state, action) {
-      // Vérifier si action.payload.volumeInfo existe
       const id = action.payload.id;
       const volumeInfo = action.payload.volumeInfo;
 
       if (!volumeInfo || !id) {
-        console.error("Volume info is missing in the payload");
+        console.error("error payload VolumeInfo");
         return;
       }
       const bookToAdd = {
         id: id,
         title: volumeInfo.title || "",
         author: volumeInfo.authors[0] || "",
-        // read: false,
       };
       const bookExists = state.books.find(
         (book) =>
@@ -58,7 +44,6 @@ const addBookSlice = createSlice({
         state.books.push(bookToAdd);
         state.id = action.payload.id;
         localStorage.setItem("booksList", JSON.stringify(state.books));
-        console.log("id from addBookFromAPI", state.id);
       }
     },
 
@@ -72,15 +57,8 @@ const addBookSlice = createSlice({
         };
 
         addDoc(booksCollection, bookObject);
-        console.log(
-          "Livre ajouté avec succès à la base de données Firebase",
-          bookObject
-        );
       } catch (error) {
-        console.error(
-          "Erreur lors de l'ajout du livre à la base de données Firebase",
-          error
-        );
+        console.error("error addBook in firebase", error);
         throw error;
       }
     },
@@ -95,21 +73,12 @@ const addBookSlice = createSlice({
     deleteBookFromFirebase(state, action) {
       try {
         const bookDoc = doc(db, "books", action.payload);
-
         deleteDoc(bookDoc);
-        console.log(
-          "Livre supprimé avec succès de la base de données Firebase",
-          action.payload
-        );
       } catch (error) {
-        console.error(
-          "Erreur lors de la suppression du livre de la base de données Firebase",
-          error
-        );
+        console.error("Error deleteBook From Firebase", error);
         throw error;
       }
     },
-
     deleteBookFailure(state, action) {
       state.error = action.payload;
     },
@@ -117,7 +86,7 @@ const addBookSlice = createSlice({
 });
 
 export const {
-  //addBook,
+  addBook,
   addBookFromAPI,
   addBookToFirebase,
   addBookFailure,

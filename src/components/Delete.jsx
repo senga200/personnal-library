@@ -7,8 +7,6 @@ import {
   deleteBookFailure,
 } from "../redux/actions/AddBookAction";
 import Modal from "./Modal";
-//import BookManager from "./BookManager";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
@@ -24,7 +22,6 @@ function Delete({ index, id }) {
 
   const handleDelete = (e) => {
     e.preventDefault();
-    console.log("index", index);
     if (!index || !id) {
       dispatch(deleteBookFailure());
       setIsModalOpen(true);

@@ -7,7 +7,7 @@ export const GetBooks = async () => {
     const booksData = await getDocs(booksCollection);
     return booksData.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
   } catch (error) {
-    console.error("Error fetching data from Firebase:", error);
+    console.error("Error fetch Firebase:", error);
     return [];
   }
 };

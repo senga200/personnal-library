@@ -1,14 +1,16 @@
+import { db } from "../firebase/firebase-config";
+import { collection, onSnapshot } from "firebase/firestore";
 import { useEffect } from "react";
-import { GetBooks } from "../firebase/GetBooks";
 
 const BookManager = ({ onDataChange }) => {
   useEffect(() => {
-    const fetchData = async () => {
-      const books = await GetBooks();
-      onDataChange(books);
-    };
+    const booksCollection = collection(db, "books");
 
-    fetchData();
+    const unsubscribe = onSnapshot(booksCollection, (snapshot) => {
+      onDataChange(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    });
+
+    return () => unsubscribe();
   }, [onDataChange]);
 
   return null;

@@ -14,10 +14,6 @@ const searchBooksSlice = createSlice({
     searchBooks(state, action) {
       console.log("state", state);
       state.fetchedBooks = action.payload;
-      //state.fetchedBooks.push(action.payload.items);
-      // localStorage.setItem("fetchedBooks", JSON.stringify(state.fetchedBooks));
-
-      console.log("fetchedBooks", state.fetchedBooks);
       state.isLoading = false;
     },
     searchBooksLoading(state, action) {

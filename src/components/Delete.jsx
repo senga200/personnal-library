@@ -10,7 +10,7 @@ import Modal from "./Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
-function Delete({ index, id }) {
+function Delete({ id }) {
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [contentModal, setContentModal] = useState("");
@@ -22,7 +22,7 @@ function Delete({ index, id }) {
 
   const handleDelete = (e) => {
     e.preventDefault();
-    if (!index || !id) {
+    if (!id) {
       dispatch(deleteBookFailure());
       setIsModalOpen(true);
       setContentModal("failure !");

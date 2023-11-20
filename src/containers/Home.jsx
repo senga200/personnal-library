@@ -1,29 +1,34 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import { db } from "../firebase/firebase-config";
-import { collection, getDocs } from "firebase/firestore";
+import { useState } from "react";
 import SearchBook from "../components/SearchBook";
+import BookManager from "../firebase/BookManager";
 import Delete from "../components/Delete";
 import Collapse from "../components/Collapse";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSort } from "@fortawesome/free-solid-svg-icons";
 import "../style/Style.css";
 
 function Home() {
   const [booksFirebase, setBooksFirebase] = useState([]);
-  const booksCollection = collection(db, "books");
+  const [sort, setSort] = useState(null);
+  const [sortOrder, setSortOrder] = useState("asc");
 
-  useEffect(() => {
-    const getBooksFirebase = async () => {
-      try {
-        const booksData = await getDocs(booksCollection);
-        setBooksFirebase(
-          booksData.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-        );
-      } catch (error) {
-        console.error("Error fetching data from Firebase:", error);
-      }
-    };
-    getBooksFirebase();
-  }, [booksCollection]);
+  const handleSort = (column) => {
+    if (sort === column) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      setSort(column);
+      setSortOrder("asc");
+    }
+  };
+
+  const sortedBooks = [...booksFirebase].sort((a, b) => {
+    if (sort === "title" || sort === "author") {
+      const comparison = a[sort].localeCompare(b[sort]);
+      return sortOrder === "asc" ? comparison : -comparison;
+    }
+    return 0;
+  });
 
   return (
     <div className="main">
@@ -31,6 +36,7 @@ function Home() {
         <h1>ADD-A-BOOK !!</h1>
       </div>
       <div className="library">
+        <BookManager onDataChange={setBooksFirebase} />
         <div className="search-book">
           <Collapse title="Search a book">
             <SearchBook />
@@ -39,18 +45,23 @@ function Home() {
         <div className="add-book">
           <Collapse title="My Books Table">
             <div className="add-book_table">
+              <div className="add-book_pagination"></div>
               <div className="books-table">
-                {booksFirebase.length > 0 ? (
+                {sortedBooks.length > 0 ? (
                   <table className="books-table">
                     <thead>
                       <tr>
-                        <th>Title</th>
-                        <th>Author</th>
+                        <th onClick={() => handleSort("title")}>
+                          Title <FontAwesomeIcon icon={faSort} />{" "}
+                        </th>
+                        <th onClick={() => handleSort("author")}>
+                          Author <FontAwesomeIcon icon={faSort} />{" "}
+                        </th>
                         <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {booksFirebase.map((book, index) => (
+                      {sortedBooks.map((book, index) => (
                         <tr key={index}>
                           <td className="books-table_content">{book.title}</td>
                           <td className="books-table_content">{book.author}</td>

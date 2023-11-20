@@ -2,11 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import { collection, addDoc, deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../firebase/firebase-config";
 
-//const booksList = JSON.parse(localStorage.getItem("booksList")) || [];
+const booksList = JSON.parse(localStorage.getItem("booksList")) || [];
 let id = 0;
 
 const initialState = {
-  books: [],
+  books: booksList || [],
   id: id,
   error: null,
 };
@@ -22,7 +22,7 @@ const initialState = {
 // error: null,
 // };
 
-//localStorage.setItem("booksList", JSON.stringify(initialState.books));
+localStorage.setItem("booksList", JSON.stringify(initialState.books));
 
 const addBookSlice = createSlice({
   name: "addBook",
@@ -90,7 +90,7 @@ const addBookSlice = createSlice({
     },
     deleteBook(state, action) {
       state.books = state.books.filter((book) => book.id !== action.payload);
-      //localStorage.setItem("booksList", JSON.stringify(state.books));
+      localStorage.setItem("booksList", JSON.stringify(state.books));
     },
     deleteBookFromFirebase(state, action) {
       try {

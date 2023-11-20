@@ -7,6 +7,8 @@ import {
   deleteBookFailure,
 } from "../redux/actions/AddBookAction";
 import Modal from "./Modal";
+//import BookManager from "./BookManager";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
@@ -29,6 +31,7 @@ function Delete({ index, id }) {
       setContentModal("failure !");
       return;
     }
+
     dispatch(deleteBook(id));
     dispatch(deleteBookFromFirebase(id));
     setIsModalOpen(true);

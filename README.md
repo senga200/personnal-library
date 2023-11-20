@@ -12,6 +12,3 @@ To create this application, I used :
 ## Features
 You can search a book from Google Books Api, and add it to you own books datatable.  
 This application is responsive.
-
-
-__You can see it on [Vercel](personnal-library.vercel.app) !__

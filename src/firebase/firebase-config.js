@@ -2,12 +2,12 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBmwdOKQaSGNnsbHZSGLKI9pfy7Kb4fILQ",
-  authDomain: "add-a-book-d1329.firebaseapp.com",
-  projectId: "add-a-book-d1329",
-  storageBucket: "add-a-book-d1329.appspot.com",
-  messagingSenderId: "425210969292",
-  appId: "1:425210969292:web:1f4747d66645246fad9669",
+  apiKey: "AIzaSyAcICcsSlMQYLO_KuQnxbF8D5xsrMmes3g",
+  authDomain: "addabook-bc27b.firebaseapp.com",
+  projectId: "addabook-bc27b",
+  storageBucket: "addabook-bc27b.appspot.com",
+  messagingSenderId: "268282617945",
+  appId: "1:268282617945:web:a120e77244ecd70d821148",
 };
 
 // Initialize Firebase

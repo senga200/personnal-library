@@ -10,7 +10,7 @@ import Modal from "../components/Modal";
 
 function SearchBook() {
   const dispatch = useDispatch();
-  const APIKey = "AIzaSyCED0o_huLcg8pn0KopN_wRdQO3d7oGHtU";
+  const APIKey = "AIzaSyDQrL0-MwiXKvSdzTr6E5KtVcanozHoG90";
   const store = useSelector((state) => state.searchBooks);
   const fetchedBooks = store.fetchedBooks;
   const [search, setSearch] = useState("");

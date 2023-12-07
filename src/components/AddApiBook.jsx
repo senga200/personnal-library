@@ -40,6 +40,7 @@ function AddApiBook({ book }) {
 
     dispatch(addBookFromAPI(book));
     dispatch(addBookToFirebase(book));
+    console.log(book, book.id);
 
     setIsModalOpen(true);
     setContentModal("Book Added Successfully");

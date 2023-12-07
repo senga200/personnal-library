@@ -19,7 +19,7 @@ function Footer() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            My Github
+            tu My Github
           </a>
         </li>
         <li>

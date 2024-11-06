@@ -1,4 +1,6 @@
-# Build a library 
+# Build a cinethèque  (hello english language)
+adaptation de mon projet avec une api de films
+(mêmes stacks, même structure...)
 
 To create this application, I used :
 * React

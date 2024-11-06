@@ -35,17 +35,17 @@ function Home() {
   return (
     <div className="main">
       <div className="main_header">
-        <h1>ADD-A-MOVIE !!</h1>
+        <h1>ADD-A-BOOK !!</h1>
       </div>
       <div className="library">
         <BookManager onDataChange={setBooksFirebase} />
         <div className="search-book">
-          <Collapse title="Search a movie">
+          <Collapse title="Search a book">
             <SearchBook />
           </Collapse>
         </div>
         <div className="add-book">
-          <Collapse title="My movie Table">
+          <Collapse title="My Books Table">
             <div className="add-book_table">
               <div className="books-table">
                 {sortedBooks.length > 0 ? (
@@ -53,10 +53,10 @@ function Home() {
                     <thead>
                       <tr>
                         <th onClick={() => handleSort("title")}>
-                          Title <FontAwesomeIcon icon={faSort} />
+                          Title <FontAwesomeIcon icon={faSort} />{" "}
                         </th>
                         <th onClick={() => handleSort("author")}>
-                          Author <FontAwesomeIcon icon={faSort} />
+                          Author <FontAwesomeIcon icon={faSort} />{" "}
                         </th>
                         <th>Delete</th>
                       </tr>
@@ -74,7 +74,7 @@ function Home() {
                     </tbody>
                   </table>
                 ) : (
-                  <p>No movie here...</p>
+                  <p>No books here...</p>
                 )}
               </div>
             </div>

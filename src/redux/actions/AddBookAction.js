@@ -25,21 +25,26 @@ const addBookSlice = createSlice({
 
     addBookFromAPI(state, action) {
       const id = action.payload.id;
-      const volumeInfo = action.payload.volumeInfo;
+      const title = action.payload.title;
+      const overview = action.payload.overview;
 
-      if (!volumeInfo || !id) {
-        console.error("error payload VolumeInfo");
+      if (!title || !id) {
+        console.error("error payload ");
         return;
       }
       const bookToAdd = {
         id: id,
-        title: volumeInfo.title || "",
-        author: volumeInfo.authors[0] || "",
+        title: title || "",
+        description: overview || "",
       };
+      // const bookExists = state.books.find(
+      //   (book) =>
+      //     book.title === bookToAdd.title && book.author === bookToAdd.author
+      // );
       const bookExists = state.books.find(
-        (book) =>
-          book.title === bookToAdd.title && book.author === bookToAdd.author
+        (book) => book.title === bookToAdd.title
       );
+
       if (!bookExists) {
         state.books.push(bookToAdd);
         state.id = action.payload.id;
@@ -52,8 +57,8 @@ const addBookSlice = createSlice({
         const booksCollection = collection(db, "books");
 
         const bookObject = {
-          title: action.payload.volumeInfo.title || "",
-          author: action.payload.volumeInfo.authors[0] || "",
+          title: action.payload.title || "",
+          author: action.payload.overview[0] || "",
         };
 
         addDoc(booksCollection, bookObject);

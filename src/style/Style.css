@@ -16,7 +16,7 @@ h1 {
 }
 
 .main_header {
-    background-image: url(/public/bgBooks.jpg);
+    background-image: url(/public/bg4.jpg);
     background-size: cover;
     display: flex;
     flex-direction: column;

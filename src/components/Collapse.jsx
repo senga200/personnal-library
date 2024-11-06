@@ -19,7 +19,7 @@ function Collapse({ title, children }) {
     <div className="menu_collapse">
       <div className="collapse_container">
         <div className="collapse_title" onClick={toggleCollapse}>
-          <span>{title}</span>{" "}
+          <span>{title}</span>
           <span className={`chevron ${chevronOpen}`}>
             <FontAwesomeIcon icon={faChevronUp} />
           </span>

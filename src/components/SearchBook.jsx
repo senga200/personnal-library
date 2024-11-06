@@ -10,12 +10,14 @@ import Modal from "../components/Modal";
 
 function SearchBook() {
   const dispatch = useDispatch();
-  const APIKey = "AIzaSyDQrL0-MwiXKvSdzTr6E5KtVcanozHoG90";
+  const APIKey = "cde11733da0373fb839cd8845465d405";
   const store = useSelector((state) => state.searchBooks);
   const fetchedBooks = store.fetchedBooks;
   const [search, setSearch] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [contentModal, setContentModal] = useState("");
+  const [contentModal, setContentModal] = useState(""); //string car on va afficher du texte
+  const [directors, setDirectors] = useState({}); //objet car on va stocker des données
+  const [actors, setActors] = useState({});
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -24,50 +26,95 @@ function SearchBook() {
 
   const handleThumbnailClick = (
     imageUrl,
-    description,
-    publishedDate,
-    publisher
+    overview,
+    releaseDate,
+    original_language,
+    directorName,
+    actorsList
   ) => {
     setIsModalOpen(true);
     setContentModal(
       <div className="modal-description">
         <img src={imageUrl} alt="Book Cover" />
         <p className="book-description">
-          <strong>Description : </strong>
-          {description}
+          <strong>Description: </strong>
+          {overview}
         </p>
         <p className="book-description">
-          <strong>Published Date : </strong>
-          {publishedDate}
+          <strong>Release Date: </strong>
+          {releaseDate}
         </p>
         <p className="book-description">
-          <strong>Publisher : </strong>
-          {publisher}
+          <strong>Language: </strong>
+          {original_language}
+        </p>
+        <p className="book-description">
+          <strong>Director: </strong>
+          {directorName}
+        </p>
+        <p className="book-description">
+          <strong>Actors: </strong>
+          {actorsList}
         </p>
       </div>
     );
   };
 
-  useEffect(() => {}, [store]);
+  useEffect(() => {
+    fetchedBooks.forEach((movie) => {
+      getMovieCredits(movie.id); // Appel de la fonction pour récupérer réalisateurs et acteurs
+    });
+  }, [fetchedBooks]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(searchBooksLoading());
 
     fetch(
-      `https://www.googleapis.com/books/v1/volumes?q=${search}&key=${APIKey}`
+      `https://api.themoviedb.org/3/search/movie?api_key=${APIKey}&query=${search}&language=fr-FR`
     )
       .then((response) => {
         if (!response.ok) {
-          throw new Error("error fetch google books");
+          throw new Error("Error fetching the MovieDB API");
         }
         return response.json();
       })
       .then((data) => {
-        dispatch(searchBooks(data.items || []));
+        dispatch(searchBooks(data.results || []));
       })
       .catch((error) => {
         dispatch(searchBooksFailure(error.message));
+      });
+  };
+
+  const getMovieCredits = (movieId) => {
+    fetch(
+      `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${APIKey}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        // Récupération du réalisateur
+        const directors = data.crew.filter(
+          (member) => member.job === "Director"
+        );
+        const directorName =
+          directors.length > 0 ? directors[0].name : "Unknown";
+
+        // Récupération des acteurs
+        const actorsList = data.cast.slice(0, 5).map((actor) => actor.name); // Limité aux 5 premiers acteurs
+
+        setDirectors((prevDirectors) => ({
+          ...prevDirectors,
+          [movieId]: directorName,
+        }));
+
+        setActors((prevActors) => ({
+          ...prevActors,
+          [movieId]: actorsList.join(", "), // Les acteurs sont stockés sous forme de chaîne séparée par des virgules
+        }));
+      })
+      .catch((error) => {
+        console.error("Error fetching movie credits", error);
       });
   };
 
@@ -78,7 +125,7 @@ function SearchBook() {
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search a book in Google Books"
+          placeholder="Search a movie in the MovieDB API"
           required
         />
         <button>Search</button>
@@ -90,39 +137,50 @@ function SearchBook() {
           <thead>
             <tr>
               <th>Title</th>
-              <th>Author</th>
-              <th>More Info</th>
+              <th>Overview</th>
+              <th>Year</th>
+              <th>Director</th>
               <th>Add</th>
             </tr>
           </thead>
           <tbody>
-            {fetchedBooks.map((book, index) => (
+            {fetchedBooks.map((movie, index) => (
               <tr key={index}>
+                <td className="books-table_content">{movie.title}</td>
                 <td className="books-table_content">
-                  {book.volumeInfo.authors}
+                  {movie.overview.length > 90
+                    ? `${movie.overview.slice(0, 90)}...`
+                    : movie.overview}
                 </td>
-                <td className="books-table_content">{book.volumeInfo.title}</td>
                 <td className="books-table_content">
+                  {movie.release_date.slice(0, 4)}
+                </td>
+                <td className="books-table_content">
+                  {directors[movie.id] || "Unknown"}
+                </td>
+                <td>
                   <img
                     className="thumbnail"
                     src={
-                      book.volumeInfo.imageLinks
-                        ? book.volumeInfo.imageLinks.thumbnail
-                        : "https://via.placeholder.com/15"
+                      movie.poster_path
+                        ? `https://image.tmdb.org/t/p/w200${movie.poster_path}`
+                        : "https://via.placeholder.com/150"
                     }
-                    alt={`${book.volumeInfo.title} book`}
+                    alt={`${movie.title} poster`}
                     onClick={() =>
                       handleThumbnailClick(
-                        book.volumeInfo.imageLinks.thumbnail,
-                        book.volumeInfo.description,
-                        book.volumeInfo.publishedDate,
-                        book.volumeInfo.publisher
+                        `https://image.tmdb.org/t/p/w200${movie.poster_path}`,
+                        movie.overview,
+                        movie.release_date,
+                        movie.original_language,
+                        directors[movie.id] || "Unknown",
+                        actors[movie.id] || "Unknown"
                       )
                     }
                   />
                 </td>
                 <td>
-                  <AddApiBook book={book} />
+                  <AddApiBook book={movie} />
                 </td>
               </tr>
             ))}

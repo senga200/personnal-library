@@ -2,12 +2,12 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAcICcsSlMQYLO_KuQnxbF8D5xsrMmes3g",
-  authDomain: "addabook-bc27b.firebaseapp.com",
-  projectId: "addabook-bc27b",
-  storageBucket: "addabook-bc27b.appspot.com",
-  messagingSenderId: "268282617945",
-  appId: "1:268282617945:web:a120e77244ecd70d821148",
+  apiKey: "AIzaSyA-zROju21tAGacoXTff6WdflVgwAi4wYw",
+  authDomain: "movies-af9a8.firebaseapp.com",
+  projectId: "movies-af9a8",
+  storageBucket: "movies-af9a8.firebasestorage.app",
+  messagingSenderId: "1087468134786",
+  appId: "1:1087468134786:web:73b6deadf1cc08a990ef9b",
 };
 
 // Initialize Firebase

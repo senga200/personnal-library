@@ -21,6 +21,7 @@ const searchBooksSlice = createSlice({
     },
     searchBooksFailure(state, action) {
       state.error = action.payload;
+      console.log("object", state.error);
     },
   },
 });

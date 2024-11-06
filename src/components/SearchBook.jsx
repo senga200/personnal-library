@@ -62,7 +62,7 @@ function SearchBook() {
 
   useEffect(() => {
     fetchedBooks.forEach((movie) => {
-      getMovieCredits(movie.id); // Appel de la fonction pour récupérer réalisateurs et acteurs
+      getMovieCredits(movie.id);
     });
   }, [fetchedBooks]);
 
@@ -101,7 +101,7 @@ function SearchBook() {
           directors.length > 0 ? directors[0].name : "Unknown";
 
         // Récupération des acteurs
-        const actorsList = data.cast.slice(0, 5).map((actor) => actor.name); // Limité aux 5 premiers acteurs
+        const actorsList = data.cast.slice(0, 5).map((actor) => actor.name); // Limité aux 5 premiers acteurs (des fois il y en a une ribambelle)
 
         setDirectors((prevDirectors) => ({
           ...prevDirectors,
@@ -110,7 +110,7 @@ function SearchBook() {
 
         setActors((prevActors) => ({
           ...prevActors,
-          [movieId]: actorsList.join(", "), // Les acteurs sont stockés sous forme de chaîne séparée par des virgules
+          [movieId]: actorsList.join(", "),
         }));
       })
       .catch((error) => {
